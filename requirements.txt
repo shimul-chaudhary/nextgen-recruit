@@ -1,0 +1,5 @@
+langchain
+calendly-python
+sendgrid
+smtplib
+email
