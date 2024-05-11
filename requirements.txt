@@ -3,3 +3,5 @@ calendly-python
 sendgrid
 pandas
 openpyxl
+langchain-groq
+python-dotenv
