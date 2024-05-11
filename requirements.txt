@@ -1,3 +1,5 @@
 langchain
 calendly-python
 sendgrid
+pandas
+openpyxl
