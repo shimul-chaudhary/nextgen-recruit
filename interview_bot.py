@@ -20,7 +20,7 @@ from langchain_groq import ChatGroq
 from openai import OpenAI
 
 # 
-
+import pyaudio
 import pyautogui as auto
 import webbrowser
 from pygame import mixer, _sdl2 as devicer
@@ -49,6 +49,8 @@ if model != "large" and english:
     model = model + ".en"
 audio_model = whisper.load_model(model)
 
+p = pyaudio.PyAudio()
+
 def transcribe(audio_data):
     if english:
         result = audio_model.transcribe(audio_data, language='english')
@@ -69,8 +71,20 @@ def record_audio(duration, sample_rate):
     # if vb_cable_device in output:
         # device = vb_cable_device
     # print(f"device-{device}")
+    vb_cable_output_name = 'CABLE Output (VB-Audio Virtual Cable)'
+    device_index = None
 
-    audio_data = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=1, dtype='float32')
+    # print()
+    for i in range(p.get_device_count()):
+        device_info = p.get_device_info_by_index(i)
+        # print(device_info)
+        if device_info['name'] == vb_cable_output_name and device_info['maxInputChannels'] > 0:
+            # print(device_info['name'])
+            device_index = i
+            break
+    # device = 'CABLE Output (VB-Audio Virtual Cable)'
+
+    audio_data = sd.rec(int(duration * sample_rate), device=device_index, samplerate=sample_rate, channels=1, dtype='float32')
     sd.wait()
     audio_data = np.squeeze(audio_data)
     return audio_data
@@ -136,7 +150,7 @@ def main():
 
     conversation_summary = "As comversation starter introduce yourself and ask the candidate to introduce themselves."
     question_count = 1
-    meet_link = "https://meet.google.com/pgk-vjdr-kpo"
+    meet_link = "https://meet.google.com/gtt-somr-hrv"
     join_meet(meet_link)
 
     mixer.init(devicename = 'CABLE Input (VB-Audio Virtual Cable)') 

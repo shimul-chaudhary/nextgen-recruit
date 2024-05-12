@@ -24,5 +24,4 @@ langchain-groq
 python-dotenv
 streamlit
 pyautogui
-webbrowser
 pygame
