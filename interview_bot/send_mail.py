@@ -50,7 +50,7 @@ def send_meet_link(recipient_name, recipient_email, job_title):
     # Email Credentials
     sender_email = "prachi1615@gmail.com"
     password = "xyly jzmq ucfu ayii"
-    meeting_link = "https://calendly.com/shivamsharma00"
+    meeting_link = "https://meet.google.com/gtt-somr-hrv"
     # Email content
     message = MIMEMultipart()
     message["From"] = sender_email

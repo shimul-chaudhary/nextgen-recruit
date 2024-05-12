@@ -1,5 +1,5 @@
 import streamlit as st
-
+from interview_bot.send_mail import send_email
 
 st.write("## Applied Jobs")
 
@@ -29,3 +29,5 @@ if job:
     st.write(f"Location: {location}")
     st.write(f"Job Description: {job_description}")
     st.write(f"Status: {status}")
+
+  send_email("Shimul","shimul.chaudhary@gmail.com", job["job_title"])
