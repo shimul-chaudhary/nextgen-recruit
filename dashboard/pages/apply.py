@@ -2,6 +2,15 @@ import streamlit as st
 from utils import data,job_list
 from langchain_community.document_loaders.pdf import PyPDFLoader
 
+import os
+import sys
+
+# Add the parent directory of your project to the Python path
+project_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(project_directory)
+sys.path.append(project_directory + "/filter_agents")
+from filter_agents.bots import get_filter_app
+
 st.title("Apply")
 
 selected_job = st.session_state.get("selected_job")
@@ -38,13 +47,14 @@ if selected_job:
   if upload_file is not None:
     
     if st.button("Submit"):
-        loader = PyPDFLoader(upload_file)
-        documents = loader.load()
+        #loader = PyPDFLoader(upload_file)
+        #documents = loader.load()
         data[selected_job["row_index"]]["flag"] = True
         selected_job["flag"] = True  
         selected_job["status"]="Applied and Under Review"
-        selected_job["resume"]=str(documents)
+        #selected_job["resume"]=str(documents)
         st.session_state["selected_job"] = selected_job
+        get_filter_app(selected_job)
         job_list.append(selected_job)
         display_applied_jobs(selected_job["job_title"],selected_job["company_name"],selected_job["location"],selected_job["description"],selected_job["row_index"],selected_job["flag"],selected_job["status"],selected_job["resume"],selected_job["summary"],job_list)
         
