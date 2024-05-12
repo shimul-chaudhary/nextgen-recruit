@@ -42,6 +42,51 @@ NextGen Recruiter
         server.login(sender_email, password)
         server.sendmail(sender_email, recipient_email, message.as_string())
         server.quit()
-        return "Email sent successfully!"
+        print("Email sent successfully!")
     except Exception as e:
-        return f"Error sending email : {e}"
+        print(f"Error sending email : {e}")
+
+def send_meet_link(recipient_name, recipient_email, job_title):
+    # Email Credentials
+    sender_email = "prachi1615@gmail.com"
+    password = "xyly jzmq ucfu ayii"
+    meeting_link = "https://calendly.com/shivamsharma00"
+    # Email content
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = recipient_email
+    message["Subject"] = "Invitation to Screening Round Interview"
+
+    body = f"""
+Dear {recipient_name},
+I hope this email finds you well.
+
+I am writing to invite you to participate in the screening round interview for the {job_title}. We were impressed by your qualifications and experience, and we believe that you could be a valuable addition to our team.
+
+The screening round interview is an opportunity for us to get to know you better and to discuss your background, skills, and career aspirations in more detail. It will also provide you with the chance to learn more about our company culture, values, and the role itself.
+
+Meeting Link: {meeting_link}
+
+Please make sure to test the meeting link prior to the interview to ensure that you can access the virtual meeting platform without any issues. If you encounter any difficulties or have any questions, please don't hesitate to reach out to me.
+
+We are excited to learn more about you and explore the possibility of you joining our team. We look forward to meeting you virtually and discussing how your skills and experiences align with our requirements.
+
+Best regards,
+
+John Kwan
+RecruitmentCoordinator
+NextGen Recruiter
+    """
+
+    message.attach(MIMEText(body, "plain"))
+
+    # Send the email
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender_email, password)
+        server.sendmail(sender_email, recipient_email, message.as_string())
+        server.quit()
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error sending email : {e}")
