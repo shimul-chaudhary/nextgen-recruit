@@ -42,7 +42,7 @@ NextGen Recruiter
         server.login(sender_email, password)
         server.sendmail(sender_email, recipient_email, message.as_string())
         server.quit()
-        print("Email sent successfully!")
+        print("Interview invite email sent successfully!")
     except Exception as e:
         print(f"Error sending email : {e}")
 
@@ -50,7 +50,7 @@ def send_meet_link(recipient_name, recipient_email, job_title):
     # Email Credentials
     sender_email = "prachi1615@gmail.com"
     password = "xyly jzmq ucfu ayii"
-    meeting_link = "https://meet.google.com/gtt-somr-hrv"
+    meeting_link = "https://meet.google.com/iqk-zfwn-iyc"
     # Email content
     message = MIMEMultipart()
     message["From"] = sender_email
@@ -87,6 +87,6 @@ NextGen Recruiter
         server.login(sender_email, password)
         server.sendmail(sender_email, recipient_email, message.as_string())
         server.quit()
-        print("Email sent successfully!")
+        print("Screening round email sent successfully!")
     except Exception as e:
         print(f"Error sending email : {e}")

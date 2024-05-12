@@ -165,11 +165,11 @@ def send_mail(conversation_summary):
 
 def main():
     print("Welcome to the interview screening chatbot!")
-    candidate_summary = "summary of The candidate is a software engineer with 5 years of experience in web development. They have worked on projects using JavaScript, React, and Node.js. They are passionate about creating user-friendly and performant web applications."
+    # candidate_summary = "summary of The candidate is a software engineer with 5 years of experience in web development. They have worked on projects using JavaScript, React, and Node.js. They are passionate about creating user-friendly and performant web applications."
 
-    conversation_summary = "As comversation starter introduce yourself and ask the candidate to introduce themselves."
+    conversation_summary = "As conversation starter introduce yourself and ask the candidate to introduce themselves."
     question_count = 1
-    meet_link = "https://meet.google.com/gtt-somr-hrv"
+    meet_link = "https://meet.google.com/iqk-zfwn-iyc"
     join_meet(meet_link)
 
     mixer.init(devicename = 'CABLE Input (VB-Audio Virtual Cable)') 

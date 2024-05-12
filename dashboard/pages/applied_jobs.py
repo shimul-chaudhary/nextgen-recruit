@@ -31,9 +31,9 @@ if job:
     st.write(f"Job Description: {job_description}")
     st.write(f"Status: {status}")
 
-  send_email("Shimul","shimul.chaudhary@gmail.com", job["job_title"], job["summary"])
+  send_email("Shimul","shimul.chaudhary@gmail.com", job["job_title"])
   time.sleep(5)
-  send_meet_link("Shimul","shimul.chaudhary@gmail.com", job["job_title"], job["summary"])
+  send_meet_link("Shimul","shimul.chaudhary@gmail.com", job["job_title"])
   time.sleep(5)
   voice_bot(job["summary"])
   

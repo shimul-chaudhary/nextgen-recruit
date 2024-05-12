@@ -102,7 +102,7 @@ def speak(text):
     mixer.music.unload()
     
     # play(reply_audio)
-    os.remove(file_name)
+    # os.remove(file_name)
     # return reply_audio, file_name
     
 
@@ -169,7 +169,7 @@ def voice_bot(canditate_summary):
 
     conversation_summary = "As comversation starter introduce yourself and ask the candidate to introduce themselves."
     question_count = 1
-    meet_link = "https://meet.google.com/gtt-somr-hrv"
+    meet_link = "https://meet.google.com/zmu-hmnk-rsu"
     join_meet(meet_link)
 
     mixer.init(devicename = 'CABLE Input (VB-Audio Virtual Cable)') 
