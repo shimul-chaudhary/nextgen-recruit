@@ -6,6 +6,12 @@ from PyPDF2 import PdfReader
 import os
 import sys
 
+
+def run():
+    st.session_state.run = True
+if 'run' not in st.session_state:
+    st.session_state.run = False
+    st.session_state.result = None
 # Add the parent directory of your project to the Python path
 project_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_directory)
@@ -48,25 +54,19 @@ if selected_job:
   st.write(f"Job Description: {job_description}")
   st.write(f"status: {status}")
   upload_file=st.file_uploader("Upload your resume")
+      
+
   if upload_file is not None:
-
-    if 'button_clicked' not in st.session_state:
-      st.session_state['button_clicked'] = False
     
-    button_disabled = st.session_state['button_clicked']
-
-    if st.button("Submit", disabled=button_disabled):
+    if st.button("Submit",on_click=run, disabled=st.session_state.run):
         pdf = PdfReader(upload_file)
         page = pdf.pages[0]
-
         data[selected_job["row_index"]]["flag"] = True
         selected_job["flag"] = True  
         selected_job["status"]="Applied and Under Review"
         selected_job["resume"]=page.extract_text()
 
         st.session_state["selected_job"] = selected_job
-        st.session_state['button_clicked'] = True  
-
         with st.spinner("Reviewing your resume..."):
           summary, parsed_resume = get_filter_app(selected_job)
 
@@ -74,9 +74,9 @@ if selected_job:
         selected_job["resume"] = parsed_resume
 
         job_list.append(selected_job)
-
+        st.session_state.run = False
         display_applied_jobs(selected_job["job_title"],selected_job["company_name"],selected_job["location"],selected_job["description"],selected_job["row_index"],selected_job["flag"],selected_job["status"],selected_job["resume"],selected_job["summary"],job_list)
-
+        
 else:
   st.write("No job applied")
 

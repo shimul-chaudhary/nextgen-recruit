@@ -24,4 +24,4 @@ prompt_verdict = "Given the interview, should we select the candidate?\
             The interview:{}"
 
 
-prompt_cleanup = "Remove empty dialogues, repeated sentences and repeated names to convert this input as a conversation:\n{}."
+prompt_cleanup = "Remove empty dialogues, repeated sentences and repeated names to convert this input as a conversation:\n{}"
