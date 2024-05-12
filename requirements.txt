@@ -20,3 +20,4 @@ sendgrid
 pandas
 openpyxl
 langchain-groq
+python-dotenv
