@@ -1,6 +1,7 @@
 import streamlit as st
-from interview_bot.send_mail import send_email
-
+from interview_bot.send_mail import send_email, send_meet_link
+import time
+from conversational_bot.interview_bot import voice_bot
 st.write("## Applied Jobs")
 
 job = st.session_state.get("applied_jobs")
@@ -30,4 +31,9 @@ if job:
     st.write(f"Job Description: {job_description}")
     st.write(f"Status: {status}")
 
-  send_email("Shimul","shimul.chaudhary@gmail.com", job["job_title"])
+  send_email("Shimul","shimul.chaudhary@gmail.com", job["job_title"], job["summary"])
+  time.sleep(5)
+  send_meet_link("Shimul","shimul.chaudhary@gmail.com", job["job_title"], job["summary"])
+  time.sleep(5)
+  voice_bot(job["summary"])
+  
