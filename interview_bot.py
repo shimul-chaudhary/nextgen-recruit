@@ -1,25 +1,18 @@
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import DocArrayInMemorySearch
 from langchain.chains import ConversationalRetrievalChain
-from langchain_community.document_loaders.pdf import PyPDFLoader
-from langchain_community.vectorstores.faiss import FAISS
 from pydub import AudioSegment
 from pydub.playback import play
 import whisper
-import torch
 import numpy as np
 import os
 from dotenv import load_dotenv
 import sounddevice as sd
-from langchain.memory import ConversationBufferMemory
 import time
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from openai import OpenAI
+import smtplib
+from email.message import EmailMessage
 
-# 
 import pyaudio
 import pyautogui as auto
 import webbrowser
@@ -117,7 +110,7 @@ MODEL_NAME = "llama3-8b-8192"
 chat = ChatGroq(temperature=0.3, groq_api_key= groq_key, model_name=MODEL_NAME)
 
 def generate_question(conversation_summary):
-    system = f"""You are an AI recruiter specializing in analyzing candidate summaries and conducting engaging interviews. remember {initial_summary} You remember the complete conversation and prioritize the last discussed point.
+    system = f"""You are an AI recruiter specializing in analyzing candidate summaries referred as resume and conducting engaging interviews. remember {initial_summary} You remember the complete conversation and prioritize the last discussed point.
                 you will be talking to the canditate directly so be professional and human-like. and responses should contain only communication from the AI recruiter. and the conversation should be completely human-like and should
                 be in a way exactly like a human would ask. and dont sound like a robot or a machine."""
     human = conversation_summary
@@ -142,6 +135,32 @@ def join_meet(meet_link):
     auto.hotkey('ctrl', 'e')
     auto.click(1240.578125, 600.55859375)
 
+
+
+# Function to send mail with conversation summary
+def send_mail(conversation_summary):
+    subject = "Interview Summary"
+    body = f"Here is the summary of the interview conversation:\n\n{conversation_summary}"
+    to_email = "nithingovindugari@gmail.com"  # Replace with the recipient's email address
+    sender = "Next Gen Recruiter <nextgenrecruiter@gmail.com>"
+    
+    message = EmailMessage()
+    message.set_content(body)
+    message["Subject"] = subject
+    message["From"] = sender
+    message["To"] = to_email
+    
+    # Send the message via SMTP server (replace with your SMTP server details)
+    smtp_host = "smtp.mailtrap.io"
+    smtp_port = 2525
+    smtp_username = "8064bd9cae3b81"  # Replace with your SMTP username
+    smtp_password = os.getenv("SMTP_PASSWORD")
+    
+    with smtplib.SMTP(smtp_host, smtp_port) as server:
+        server.login(smtp_username, smtp_password)
+        server.send_message(message)
+    
+    return "Email sent successfully"
 
 
 def main():
@@ -181,7 +200,9 @@ def main():
     speak("Thank you for your responses. The interview is now complete.")
     print("Interview summary:")
     print(conversation_summary)
-    mixer.quit()
+    mixer.quit()    
+    # Call the send_mail function to send the email
+    send_mail(conversation_summary)
 
 if __name__ == '__main__':
     main()
