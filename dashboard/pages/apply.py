@@ -1,6 +1,7 @@
 import streamlit as st
 from utils import data,job_list
 from langchain_community.document_loaders.pdf import PyPDFLoader
+from PyPDF2 import PdfReader
 
 import os
 import sys
@@ -15,7 +16,7 @@ st.title("Apply")
 
 selected_job = st.session_state.get("selected_job")
 applied_job=st.session_state.get("applied_jobs")
-def display_applied_jobs(job_title,company_name,location,job_description,row_index,flag,status,list):
+def display_applied_jobs(job_title,company_name,location,job_description,row_index,flag,status,resume,summary,list):
             st.session_state["applied_jobs"] = {
             "job_title": job_title,
             "company_name": company_name,
@@ -24,6 +25,8 @@ def display_applied_jobs(job_title,company_name,location,job_description,row_ind
             "row_index":row_index,
             "flag":flag,
             "status":status,
+            "resume":resume,
+            "summary":summary,
             "list":list
         }
             st.switch_page("pages/applied_jobs.py")
@@ -47,13 +50,14 @@ if selected_job:
   if upload_file is not None:
     
     if st.button("Submit"):
-        #loader = PyPDFLoader(upload_file)
-        #documents = loader.load()
+        pdf = PdfReader(upload_file)
+        page = pdf.pages[0]
         data[selected_job["row_index"]]["flag"] = True
         selected_job["flag"] = True  
         selected_job["status"]="Applied and Under Review"
-        #selected_job["resume"]=str(documents)
+        selected_job["resume"]=str(page.extract_text())
         st.session_state["selected_job"] = selected_job
+        
         get_filter_app(selected_job)
         job_list.append(selected_job)
         display_applied_jobs(selected_job["job_title"],selected_job["company_name"],selected_job["location"],selected_job["description"],selected_job["row_index"],selected_job["flag"],selected_job["status"],selected_job["resume"],selected_job["summary"],job_list)
