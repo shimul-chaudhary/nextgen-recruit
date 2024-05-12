@@ -2,13 +2,21 @@ from langgraph.graph import StateGraph, END
 
 from graph_state import GraphState
 from prompts import *
-from filter_handlers import handle_evaluate, handle_question, handle_response, handle_result, check_conv_length
+import json
+from filter_handlers import *
 
 def run_filter_app(job_payload):
-    workflow = StateGraph(GraphState)
-    print("************************************************JOB********************************************")
-    print(job_payload)
 
+    print(job_payload)
+    print("**********************START***********************\n\n")
+
+    parsed_resume = handle_resume_parser(job_payload['resume'])
+
+    print(parsed_resume)
+
+    print("**********************PARSE***********************\n\n")
+
+    workflow = StateGraph(GraphState)
 
     workflow.add_node("handle_question", handle_question)
     workflow.add_node("handle_evaluate", handle_evaluate)
@@ -31,12 +39,10 @@ def run_filter_app(job_payload):
 
     app = workflow.compile()
 
-    conversation = app.invoke({'history': '', 'interviewer': '', 'current_question': '', 'current_answer': '', 'total_questions': 0, 'candidate': ''})
+    conversation = app.invoke({'history': '', 'job_description': job_payload['description'], 'resume': parsed_resume, 'current_question': '', 'current_answer': '', 'total_questions': 0, 'summary': ''})
 
-    print(conversation['history'])
+    print(conversation['summary'])
+    return conversation['summary'], parsed_resume
 
 def get_filter_app(job_payload):
     return run_filter_app(job_payload)
-
-
-

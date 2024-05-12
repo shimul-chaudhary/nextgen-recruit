@@ -55,10 +55,12 @@ if selected_job:
         data[selected_job["row_index"]]["flag"] = True
         selected_job["flag"] = True  
         selected_job["status"]="Applied and Under Review"
-        selected_job["resume"]=str(page.extract_text())
+        selected_job["resume"]=page.extract_text()
         st.session_state["selected_job"] = selected_job
         
-        get_filter_app(selected_job)
+        summary, parsed_resume = get_filter_app(selected_job)
+        selected_job["summary"] = summary
+        selected_job["resume"] = parsed_resume
         job_list.append(selected_job)
         display_applied_jobs(selected_job["job_title"],selected_job["company_name"],selected_job["location"],selected_job["description"],selected_job["row_index"],selected_job["flag"],selected_job["status"],selected_job["resume"],selected_job["summary"],job_list)
         

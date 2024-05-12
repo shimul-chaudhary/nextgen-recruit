@@ -22,4 +22,4 @@ def read_jsonl_and_modify(filename):
 
   return modify_jsonl(data)
 
-data = read_jsonl_and_modify("../job-description.jsonl")  
+data = read_jsonl_and_modify("job-description.jsonl")  

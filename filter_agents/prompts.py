@@ -1,8 +1,14 @@
-prompt_interviewer = "You're a bot that loads a job description. You need to interview a candidate based on their resume. This is the interview so far:\n{}\n\
-    Ask questions to figure out if the candidate is a good fit based on their resume. Ask your next question and don't repeat your questions.\
+prompt_resume_parser= "You're a resume parser bot\
+            You have the following resume text:\n{}\n.\
+            Parse the data and extract candidate name, email id, location, work experience and project details from the text. For work experience and projects make sure to add all the details.\
+            Output the data a json object with the following keys: name, email, location, work_experience, projects.\n\
+            I want a true json output and no text crud around it."
+
+prompt_jd = "You're a bot that loads a job description. You need to evaluate a candidate based on the job description. This is the job description:\n{}\n This is the interview so far:\n{}\n\
+    Ask right questions to figure out if the candidate is a good fit based on the job description. Ask your next question and don't repeat your questions.\
     Keep it less than 20 words and output just the question and no extra text."
 
-prompt_interviewee = "You're a bot that loads a resume. This is the resume:\n{}\n Answer the questions you are being asked. Output just the answer and no extra text. Question: {}"
+prompt_resume = "You're a bot that loads a resume. This is the resume:\n{}\n Answer the questions you are being asked based on the work experience and projects provided in the resume. Don't use your own knowledge but answer extensively using the context from the resume and show why you would be a good fit for the job. Output just the answer and no extra text. Question: {}"
 
 prompt_result = "Check whether the answer given for asked question is correct or not?\
     Evaluate on a scale of 10 and give a short reason as well\
@@ -14,4 +20,4 @@ prompt_verdict = "Given the interview, should we select the candidate?\
             The interview:{}"
 
 
-prompt_cleanup = "Remove empty dialogues, repeated sentences and repeated names to convert this input as a conversation:\n{}"
+prompt_cleanup = "Remove empty dialogues, repeated sentences and repeated names to convert this input as a conversation:\n{}."
