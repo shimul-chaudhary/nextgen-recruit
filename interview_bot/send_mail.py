@@ -46,6 +46,41 @@ NextGen Recruiter
     except Exception as e:
         print(f"Error sending email : {e}")
 
+def send_reject_email(recipient_name, recipient_email, job_title):
+    # Email Credentials
+    sender_email = "prachi1615@gmail.com"
+    password = "xyly jzmq ucfu ayii"
+    # Email content
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = recipient_email
+    message["Subject"] = "Feedback after Resume Screening"
+
+    body = f"""
+Dear {recipient_name},
+
+I hope you are doing well! I'm John, Recruitment Coordinator at NextGen Recruit. Thank you for your interest but for now we have decided to move forward with other candidates.
+
+Warmest Regards,
+
+John Kwan
+RecruitmentCoordinator
+NextGen Recruiter
+    """
+
+    message.attach(MIMEText(body, "plain"))
+
+    # Send the email
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender_email, password)
+        server.sendmail(sender_email, recipient_email, message.as_string())
+        server.quit()
+        print("Rejected email sent successfully!")
+    except Exception as e:
+        print(f"Error sending email : {e}")
+
 def send_meet_link(recipient_name, recipient_email, job_title):
     # Email Credentials
     sender_email = "prachi1615@gmail.com"

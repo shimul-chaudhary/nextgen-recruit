@@ -75,6 +75,9 @@ if selected_job:
 
         job_list.append(selected_job)
         st.session_state.run = False
+
+        if "**Output:** No" in selected_job["summary"]:
+            selected_job["status"]="Rejected"
         display_applied_jobs(selected_job["job_title"],selected_job["company_name"],selected_job["location"],selected_job["description"],selected_job["row_index"],selected_job["flag"],selected_job["status"],selected_job["resume"],selected_job["summary"],job_list)
         
 else:
