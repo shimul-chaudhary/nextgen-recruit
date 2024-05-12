@@ -19,6 +19,14 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from openai import OpenAI
 
+# 
+
+import pyautogui as auto
+import webbrowser
+from pygame import mixer, _sdl2 as devicer
+
+import pygame.sndarray
+
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 groq_key = os.getenv("GROQ_API_KEY")
@@ -50,6 +58,18 @@ def transcribe(audio_data):
 
 def record_audio(duration, sample_rate):
     print("Listening...")
+    
+    # sd.default.device = (1, 3)
+
+    # vb_cable_device = 'CABLE Input (VB-Audio Virtual C'
+    # pygame.mixer.set_output(vb_cable_device)
+    # device = 'Speakers (Realtek(R) Audio)'
+    # output = devicer.audio.get_audio_device_names(False)
+    # print(input)
+    # if vb_cable_device in output:
+        # device = vb_cable_device
+    # print(f"device-{device}")
+
     audio_data = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=1, dtype='float32')
     sd.wait()
     audio_data = np.squeeze(audio_data)
@@ -65,8 +85,19 @@ def speak(text):
     client.with_streaming_response.audio.speech.create
     response.stream_to_file(file_name)
     reply_audio = AudioSegment.from_mp3(file_name)
-    play(reply_audio)
+    
+    mixer.music.load(file_name)
+    mixer.music.play()
+
+    while mixer.music.get_busy():
+        time.sleep(1)
+    
+    mixer.music.unload()
+    
+    # play(reply_audio)
     os.remove(file_name)
+    # return reply_audio, file_name
+    
 
 MODEL_NAME = "llama3-8b-8192"
 chat = ChatGroq(temperature=0.3, groq_api_key= groq_key, model_name=MODEL_NAME)
@@ -90,6 +121,14 @@ def generate_question(conversation_summary):
 
     return content
 
+def join_meet(meet_link):
+    webbrowser.open_new_tab(meet_link)
+    time.sleep(7)
+    # auto.hotkey('ctrl', 'd')
+    auto.hotkey('ctrl', 'e')
+    auto.click(1240.578125, 600.55859375)
+
+
 
 def main():
     print("Welcome to the interview screening chatbot!")
@@ -97,6 +136,11 @@ def main():
 
     conversation_summary = "As comversation starter introduce yourself and ask the candidate to introduce themselves."
     question_count = 1
+    meet_link = "https://meet.google.com/pgk-vjdr-kpo"
+    join_meet(meet_link)
+
+    mixer.init(devicename = 'CABLE Input (VB-Audio Virtual Cable)') 
+    # Initialize it with the correct device
 
     # greeting = "Hey there! How are you doing today? Let"
     # speak(greeting)
@@ -109,6 +153,8 @@ def main():
         question = generate_question(conversation_summary)
 
         speak(question)
+        
+
         audio_data = record_audio(duration=10, sample_rate=16000)
         response = transcribe(audio_data)
         time.sleep(5)
@@ -117,9 +163,11 @@ def main():
         print(f"Answer: {response}\n")
         question_count += 1
 
+
     speak("Thank you for your responses. The interview is now complete.")
     print("Interview summary:")
     print(conversation_summary)
+    mixer.quit()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
