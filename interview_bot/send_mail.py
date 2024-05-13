@@ -3,12 +3,13 @@ import email
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import requests
+import os
 
 # Sending an email with a calendly link
 def send_email(recipient_name, recipient_email, job_title):
     # Email Credentials
-    sender_email = "prachi1615@gmail.com"
-    password = "xyly jzmq ucfu ayii"
+    sender_email = os.getenv("SENDER_MAIL")
+    password = os.getenv("EMAIL_PASSWORD")
     calendly_link = "https://calendly.com/shivamsharma00"
     # Email content
     message = MIMEMultipart()
@@ -48,8 +49,8 @@ NextGen Recruiter
 
 def send_reject_email(recipient_name, recipient_email, job_title):
     # Email Credentials
-    sender_email = "prachi1615@gmail.com"
-    password = "xyly jzmq ucfu ayii"
+    sender_email = os.getenv("SENDER_MAIL")
+    password = os.getenv("EMAIL_PASSWORD")
     # Email content
     message = MIMEMultipart()
     message["From"] = sender_email
@@ -83,8 +84,8 @@ NextGen Recruiter
 
 def send_meet_link(recipient_name, recipient_email, job_title):
     # Email Credentials
-    sender_email = "prachi1615@gmail.com"
-    password = "xyly jzmq ucfu ayii"
+    sender_email = os.get_env("SENDER_EMAIL")
+    password = os.getenv("EMAIL_PASSWORD")
     meeting_link = "https://meet.google.com/iqk-zfwn-iyc"
     # Email content
     message = MIMEMultipart()
