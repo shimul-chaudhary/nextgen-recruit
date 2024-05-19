@@ -17,8 +17,9 @@ import pyaudio
 import pyautogui as auto
 import webbrowser
 from pygame import mixer, _sdl2 as devicer
-
+import platform
 import pygame.sndarray
+from llama3_model import get_llm
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
@@ -106,9 +107,9 @@ def speak(text):
     # return reply_audio, file_name
     
 
-MODEL_NAME = "llama3-8b-8192"
-chat = ChatGroq(temperature=0.3, groq_api_key= groq_key, model_name=MODEL_NAME)
-
+# MODEL_NAME = "llama3-8b-8192"
+# chat = ChatGroq(temperature=0.3, groq_api_key= groq_key, model_name=MODEL_NAME)
+chat = get_llm()
 def generate_question(canditate_summary, conversation_summary):
     system = f"""You are an AI recruiter specializing in analyzing candidate summaries referred as resume and conducting engaging interviews. remember {canditate_summary} You remember the complete conversation and prioritize the last discussed point.
                 you will be talking to the canditate directly so be professional and human-like. and responses should contain only communication from the AI recruiter. and the conversation should be completely human-like and should
@@ -128,13 +129,47 @@ def generate_question(canditate_summary, conversation_summary):
 
     return content
 
-def join_meet(meet_link):
-    webbrowser.open_new_tab(meet_link)
-    time.sleep(7)
-    # auto.hotkey('ctrl', 'd')
-    auto.hotkey('ctrl', 'e')
-    auto.click(1240.578125, 600.55859375)
 
+# Function to get the operating system
+def get_operating_system():
+    os_name = platform.system()
+    if os_name == "Darwin":
+        return "macOS"
+    elif os_name == "Windows":
+        return "Windows"
+    else:
+        return "Unknown"
+
+#  operating system
+os_type = get_operating_system()
+
+if os_type != "macOS":
+    def join_meet(meet_link):
+        webbrowser.open_new_tab(meet_link)
+        time.sleep(7)
+        # auto.hotkey('ctrl', 'd')
+        auto.hotkey('ctrl', 'e')
+        auto.click(1240.578125, 600.55859375)
+else:
+    # for macos
+    def join_meet(meet_link):
+        # Open the meet link in a new browser tab
+        webbrowser.open_new_tab(meet_link)
+        time.sleep(10)  # Wait for the browser to open and load the page
+
+        # Ensure the browser window is focused
+        auto.hotkey('command', 'tab')  # Switch to the browser (may need to adjust for your setup)
+        time.sleep(2)
+
+        # Turn off camera
+        auto.hotkey('command', 'e')  # Turn off the camera
+        time.sleep(1)
+
+        # Click the "Join now" button
+        join_button_x, join_button_y = 1047, 544  # Coordinates for the "Join now" button
+        auto.click(join_button_x, join_button_y)
+        time.sleep(10)
+        print("Joined the meeting.")
 
 
 # Function to send mail with conversation summary
@@ -169,10 +204,13 @@ def voice_bot(canditate_summary):
 
     conversation_summary = "As comversation starter introduce yourself and ask the candidate to introduce themselves."
     question_count = 1
-    meet_link = "https://meet.google.com/zmu-hmnk-rsu"
+    meet_link = os.getenv("MEET_LINK")
     join_meet(meet_link)
 
-    mixer.init(devicename = 'CABLE Input (VB-Audio Virtual Cable)') 
+    # mixer.init(devicename = 'CABLE Input (VB-Audio Virtual Cable)')
+    
+    mixer.init()  # Initialize the mixer without specifying a device
+ 
     # Initialize it with the correct device
 
     # greeting = "Hey there! How are you doing today? Let"

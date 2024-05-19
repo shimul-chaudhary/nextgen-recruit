@@ -19,7 +19,7 @@ prompt_result = "Check whether the given asnwers have a good fit with the job de
         question:{}\nanswer:{}"
 
 prompt_verdict = "Given the interview, should we select the candidate?\
-    Give output as Yes or No with a reason. Average score of 7 or above across all questions is a yes candidate. \
+    Give output as Yes or No with a reason. Average score of 6 or above across all questions is a yes candidate. \
         Also generate a summary of the responses so that they can be shared with the hiring team.\
             The interview:{}"
 

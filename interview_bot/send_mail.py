@@ -84,9 +84,9 @@ NextGen Recruiter
 
 def send_meet_link(recipient_name, recipient_email, job_title):
     # Email Credentials
-    sender_email = os.get_env("SENDER_EMAIL")
+    sender_email = os.getenv("SENDER_EMAIL")
     password = os.getenv("EMAIL_PASSWORD")
-    meeting_link = "https://meet.google.com/iqk-zfwn-iyc"
+    meeting_link = os.getenv("MEET_LINK")
     # Email content
     message = MIMEMultipart()
     message["From"] = sender_email
