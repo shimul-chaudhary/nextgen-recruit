@@ -1,9 +1,9 @@
-**Repository Name: NextGen Recruit**
+**Repository Name: Generative AI Recruitment Copilot**
 
 ---
 
 ## Introduction
-Welcome to the Next Gen Recruiter repository! This repository hosts a conversational AI-based interview screening chatbot. The chatbot interacts with candidates, conducts interviews, and summarizes the conversations for further analysis.
+Welcome to the Generative AI Recruitment Copilot Recruiter repository! This repository hosts a conversational AI-based interview screening chatbot. The chatbot interacts with candidates, conducts interviews, and summarizes the conversations for further analysis.
 
 ---
 
@@ -51,25 +51,10 @@ The chatbot offers the following functionalities:
 
 ---
 
-## Team Members
-- Shimul Chaudhary
-- Nithin Reddy
-- Prachi Sethi
-- Shivam Sharma
-
----
-
-Feel free to replace the placeholders with the actual names of your team members.
-
-## Contact Information
-For any inquiries or support regarding this project, feel free to contact us at nextgenrecruiter@gmail.com.
-
----
-
 ## Acknowledgments
 - This project utilizes various open-source libraries and APIs, without which it would not be possible.
 - Special thanks to the developers and contributors of these tools for their valuable contributions to the open-source community.
 
 ---
 
-Thank you for using the Next Gen Recruiter chatbot! We hope it helps streamline your interview screening process effectively.
+Thank you for using the Generative AI Recruitement Copilot Recruiter chatbot! We hope it helps streamline your interview screening process effectively.
